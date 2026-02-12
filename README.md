@@ -1,215 +1,226 @@
-# 🎬 UPLIFTLY
+# UPLIFTLY
 
-> **AI-Powered Creator Platform for Video Content Analysis**
+> AI-Powered Video Content Optimization Platform
 
-[![Made with FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-009688?logo=fastapi)](https://fastapi.tiangolo.com)
-[![Made with Next.js](https://img.shields.io/badge/Next.js-14.1.0-black?logo=next.js)](https://nextjs.org)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?logo=postgresql)](https://postgresql.org)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)](https://docker.com)
+UPLIFTLY is an intelligent platform that empowers video content creators to analyze and optimize their content before publishing. Using advanced AI capabilities, the platform delivers actionable insights, engagement recommendations, and improvement suggestions to help creators maximize their content's impact.
 
----
+## 🎯 Overview
 
-## 📋 Overview
-
-UPLIFTLY is an intelligent web platform designed to help content creators analyze, optimize, and improve their video content before publishing. Using AI-powered analysis, creators receive actionable insights and improvement suggestions to maximize audience engagement.
+Content creators often publish videos without understanding their potential performance. UPLIFTLY bridges this gap by providing pre-publication AI analysis, helping creators make data-driven decisions to improve engagement, quality, and audience reach.
 
 ## ✨ Features
 
-- 🔐 **Secure Authentication** - JWT-based login with bcrypt password hashing
-- 📊 **User Dashboard** - Personalized analytics and content management
-- 🎥 **Video Upload** - Coming soon: Upload videos for AI analysis
-- 🤖 **AI Analysis** - Coming soon: Automated content optimization suggestions
+- **Secure Authentication**: User registration and login powered by Amazon Cognito
+- **Creator Dashboard**: Personalized dashboard with video analytics and insights
+- **Video Upload System**: Seamless drag-and-drop video upload with progress tracking
+- **AI Content Analysis**: Automated video analysis using Amazon Bedrock
+- **Smart Recommendations**: AI-generated suggestions for content optimization
+- **Real-time Insights**: Instant feedback on content quality and engagement potential
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
-| Layer | Technology |
-|-------|------------|
-| Frontend | Next.js 14, React 18, TypeScript |
-| Backend | Python 3.11, FastAPI, SQLAlchemy |
-| Database | PostgreSQL 15 |
-| Auth | JWT, bcrypt |
-| DevOps | Docker, Docker Compose |
+### Frontend
+- **Next.js** - React framework for production
+- **React** - UI component library
+- **Amazon S3** - Static website hosting
+- **Amazon CloudFront** - Global CDN for fast content delivery
+
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web application framework
+- **AWS Lambda** - Serverless compute
+- **Amazon API Gateway** - RESTful API management
+
+### Data & Storage
+- **Amazon DynamoDB** - NoSQL database for user data and analysis results
+- **Amazon S3** - Object storage for video files
+
+### AI & Machine Learning
+- **Amazon Bedrock** - Foundation models for content analysis and recommendations
+
+### Authentication & Security
+- **Amazon Cognito** - User authentication and authorization
+
+### Monitoring
+- **Amazon CloudWatch** - Application monitoring and logging
 
 ## 📁 Project Structure
 
 ```
-PROCREATE/
-├── backend/
-│   ├── app/
-│   │   ├── main.py           # FastAPI entry point
-│   │   ├── config.py         # Configuration
-│   │   ├── database.py       # Database connection
-│   │   ├── models/           # SQLAlchemy models
-│   │   ├── schemas/          # Pydantic schemas
-│   │   ├── routes/           # API endpoints
-│   │   └── services/         # Business logic
-│   ├── requirements.txt
-│   └── Dockerfile
-├── frontend/
-│   ├── src/
-│   │   ├── app/              # Next.js pages
-│   │   └── services/         # API client
-│   ├── package.json
-│   └── Dockerfile
-├── docker-compose.yml
-├── requirements.md           # Project requirements
-├── design.md                 # System design
-└── README.md
+upliftly/
+├── frontend/                 # Next.js frontend application
+│   ├── components/          # React components
+│   ├── pages/              # Next.js pages
+│   ├── public/             # Static assets
+│   ├── styles/             # CSS/styling files
+│   └── utils/              # Utility functions
+│
+├── backend/                 # Node.js backend services
+│   ├── functions/          # Lambda function handlers
+│   │   ├── auth/          # Authentication logic
+│   │   ├── upload/        # Video upload handling
+│   │   ├── analysis/      # AI analysis orchestration
+│   │   └── dashboard/     # Dashboard data aggregation
+│   ├── services/          # Business logic services
+│   └── utils/             # Helper functions
+│
+├── infrastructure/          # Infrastructure as Code
+│   ├── cloudformation/    # AWS CloudFormation templates
+│   └── scripts/           # Deployment scripts
+│
+├── docs/                   # Documentation
+│   ├── design.md          # System design document
+│   └── requirements.md    # Requirements specification
+│
+└── README.md              # This file
 ```
 
-## 🚀 Getting Started
+## 🚀 Deployment Overview
+
+UPLIFTLY uses a serverless architecture deployed on AWS:
+
+1. **Frontend**: Built with Next.js, exported as static files, hosted on S3, and distributed via CloudFront
+2. **Backend**: Serverless functions deployed to AWS Lambda, exposed through API Gateway
+3. **Database**: DynamoDB tables for users, videos, and analysis data
+4. **Storage**: S3 buckets for video files with lifecycle policies
+5. **AI Processing**: Amazon Bedrock integration for content analysis
+
+## 🔐 Environment Variables
+
+### Frontend (.env.local)
+```
+NEXT_PUBLIC_API_URL=<API_Gateway_URL>
+NEXT_PUBLIC_COGNITO_USER_POOL_ID=<Cognito_User_Pool_ID>
+NEXT_PUBLIC_COGNITO_CLIENT_ID=<Cognito_Client_ID>
+NEXT_PUBLIC_AWS_REGION=<AWS_Region>
+```
+
+### Backend (Lambda Environment Variables)
+```
+DYNAMODB_USERS_TABLE=<Users_Table_Name>
+DYNAMODB_VIDEOS_TABLE=<Videos_Table_Name>
+DYNAMODB_ANALYSIS_TABLE=<Analysis_Table_Name>
+S3_VIDEO_BUCKET=<Video_Bucket_Name>
+BEDROCK_MODEL_ID=<Bedrock_Model_ID>
+AWS_REGION=<AWS_Region>
+```
+
+## 🏁 Getting Started
 
 ### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+- AWS Account with appropriate permissions
+- AWS CLI configured
 
-- Docker & Docker Compose (recommended)
-- Or: Node.js 20+, Python 3.11+, PostgreSQL 15+
+### Local Development
 
-### Option 1: Docker (Recommended)
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/upliftly.git
+   cd upliftly
+   ```
 
-```bash
-# Clone and navigate to project
-cd UPLIFTLY
+2. **Install frontend dependencies**
+   ```bash
+   cd frontend
+   npm install
+   ```
 
-# Start all services
-docker-compose up --build
+3. **Install backend dependencies**
+   ```bash
+   cd ../backend
+   npm install
+   ```
 
-# Access the application
-# Frontend: http://localhost:3000
-# Backend API: http://localhost:8000
-# API Docs: http://localhost:8000/docs
-```
+4. **Configure environment variables**
+   - Copy `.env.example` to `.env.local` in frontend directory
+   - Update with your AWS resource values
 
-### Option 2: Local Development
+5. **Run frontend locally**
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+   Frontend will be available at `http://localhost:3000`
 
-#### Backend Setup
+6. **Test Lambda functions locally** (optional)
+   ```bash
+   cd backend
+   npm run test
+   ```
 
-```bash
-# Navigate to backend
-cd PROCREATE/backend
+### Deployment
 
-# Create virtual environment
-python -m venv venv
+1. **Deploy infrastructure**
+   ```bash
+   cd infrastructure
+   aws cloudformation deploy --template-file template.yaml --stack-name upliftly-stack
+   ```
 
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# macOS/Linux:
-source venv/bin/activate
+2. **Deploy backend functions**
+   ```bash
+   cd backend
+   npm run deploy
+   ```
 
-# Install dependencies
-pip install -r requirements.txt
+3. **Build and deploy frontend**
+   ```bash
+   cd frontend
+   npm run build
+   aws s3 sync out/ s3://your-bucket-name
+   aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
+   ```
 
-# Create .env file
-cp .env.example .env
-# Edit .env with your database credentials
+## 📊 Usage
 
-# Run the server
-uvicorn app.main:app --reload --port 8000
-```
+1. **Sign Up**: Create an account using email and password
+2. **Login**: Access your personalized dashboard
+3. **Upload Video**: Drag and drop your video file or click to browse
+4. **Analyze**: Wait for AI analysis to complete (typically 30-60 seconds)
+5. **Review Insights**: View AI-generated recommendations and insights
+6. **Optimize**: Apply suggestions to improve your content before publishing
 
-#### Frontend Setup
+## 🎓 Architecture Highlights
 
-```bash
-# Navigate to frontend
-cd PROCREATE/frontend
+- **Serverless**: Zero server management, automatic scaling
+- **Cost-Effective**: Pay only for what you use
+- **Scalable**: Handles traffic spikes automatically
+- **Secure**: AWS-managed security with Cognito and IAM
+- **Fast**: Global CDN delivery with CloudFront
+- **AI-Powered**: Leverages Amazon Bedrock foundation models
 
-# Install dependencies
-npm install
+## 🔮 Future Enhancements
 
-# Create environment file
-echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > .env.local
-
-# Run development server
-npm run dev
-```
-
-#### Database Setup
-
-```bash
-# Create PostgreSQL database
-createdb procreate
-
-# The tables will be created automatically when the backend starts
-```
-
-## 🔗 API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/signup` | Register new user |
-| `POST` | `/login` | Authenticate user |
-| `GET` | `/dashboard` | Get user dashboard (protected) |
-| `GET` | `/health` | Health check |
-| `GET` | `/docs` | Swagger API documentation |
-
-### Example API Usage
-
-```bash
-# Signup
-curl -X POST http://localhost:8000/signup \
-  -H "Content-Type: application/json" \
-  -d '{"name": "John Doe", "email": "john@example.com", "password": "secure123"}'
-
-# Login
-curl -X POST http://localhost:8000/login \
-  -H "Content-Type: application/json" \
-  -d '{"email": "john@example.com", "password": "secure123"}'
-
-# Dashboard (with token)
-curl http://localhost:8000/dashboard \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-## 🔒 Environment Variables
-
-### Backend
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql://postgres:postgres@localhost:5432/procreate` |
-| `SECRET_KEY` | JWT signing key | Change in production! |
-| `ALGORITHM` | JWT algorithm | `HS256` |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Token expiry | `30` |
-| `CORS_ORIGINS` | Allowed origins | `["http://localhost:3000"]` |
-
-### Frontend
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `NEXT_PUBLIC_API_URL` | Backend API URL | `http://localhost:8000` |
-
-## 📖 Documentation
-
-- [requirements.md](./requirements.md) - Project requirements and specifications
-- [design.md](./design.md) - System architecture and design decisions
-- [API Docs](http://localhost:8000/docs) - Interactive Swagger documentation
-
-## 🧪 Testing
-
-```bash
-# Backend tests (when implemented)
-cd backend
-pytest
-
-# Frontend tests (when implemented)
-cd frontend
-npm test
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- Thumbnail optimization with A/B testing
+- Engagement prediction models
+- SEO improvement suggestions
+- Advanced analytics dashboard
+- Multi-platform integration
+- Team collaboration features
 
 ## 📄 License
 
-This project is developed for hackathon demonstration purposes.
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🏆 Hackathon Submission
+
+This project was developed for [Hackathon Name] with the goal of empowering content creators through AI-driven insights. The MVP demonstrates core functionality including authentication, video upload, AI analysis, and recommendation generation using AWS serverless technologies.
+
+**Team Members**: [Your Team Name/Members]
+
+**Submission Date**: [Date]
+
+**Demo Video**: [Link to demo video if available]
+
+## 🤝 Contributing
+
+This is a hackathon project, but contributions are welcome! Please feel free to submit issues or pull requests.
+
+## 📧 Contact
+
+For questions or feedback, please reach out to [your-email@example.com]
 
 ---
 
-<div align="center">
-  <strong>Built with ❤️ for Hackathon 2026</strong>
-</div>
+Built with ❤️ using AWS and AI
