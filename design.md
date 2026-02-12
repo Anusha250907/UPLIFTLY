@@ -1,355 +1,282 @@
-# UPLIFTLY - System Design Document
+# UPLIFTLY - Design Document
 
-> **AI-Powered Creator Platform for Video Content Analysis**
+## Product Overview
 
----
+UPLIFTLY is an intelligent video content optimization platform that bridges the gap between content creation and audience engagement. By analyzing video content through advanced AI models, the platform provides creators with actionable insights to improve their content before publication.
 
-## 📖 Product Overview
+## Problem Statement
 
-UPLIFTLY is a comprehensive web platform that empowers content creators to analyze and improve their video content using artificial intelligence. By providing actionable insights before publishing, UPLIFTLY helps creators maximize engagement, reach, and overall content quality.
+Video content creators face several challenges:
 
-### Key Value Propositions
-- **AI-Driven Insights**: Automated analysis of video content
-- **Pre-Publish Optimization**: Improve content before it goes live
-- **Data-Driven Decisions**: Analytics to guide content strategy
-- **Time Efficiency**: Reduce manual review time significantly
+1. **Lack of Pre-Publication Insights**: Creators often publish content without understanding its potential performance
+2. **Time-Consuming Manual Analysis**: Reviewing and optimizing content manually is resource-intensive
+3. **Inconsistent Quality**: Without systematic feedback, content quality varies significantly
+4. **Missed Optimization Opportunities**: Creators lack data-driven guidance on improving engagement
+5. **Trial and Error Approach**: Current workflow relies on post-publication metrics, leading to wasted effort
 
----
+## Proposed Solution
 
-## 🎯 Problem Statement
+UPLIFTLY addresses these challenges by providing:
 
-### The Challenge
-Content creators face several challenges in today's competitive digital landscape:
+- **Pre-Publication Analysis**: AI-powered content evaluation before going live
+- **Automated Insights**: Instant recommendations without manual review
+- **Consistent Quality Standards**: Systematic evaluation against best practices
+- **Data-Driven Optimization**: Actionable suggestions based on AI analysis
+- **Proactive Improvement**: Identify and fix issues before publication
 
-1. **Content Quality Uncertainty**: Creators lack objective metrics to evaluate content before publishing
-2. **Time-Consuming Reviews**: Manual content review is slow and inconsistent
-3. **Missed Optimization Opportunities**: Without AI assistance, subtle improvements go unnoticed
-4. **Engagement Prediction Difficulty**: Hard to predict how audiences will respond
-5. **SEO Optimization Gap**: Title, description, and thumbnail optimization requires expertise
-
-### Impact
-- Lower engagement rates
-- Reduced audience growth
-- Inconsistent content quality
-- Wasted production resources
-
----
-
-## 💡 Proposed Solution
-
-### PROCREATE Platform
-
-A unified platform that combines:
+## System Architecture
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                    PROCREATE SOLUTION                          │
-├────────────────────────────────────────────────────────────────┤
-│                                                                │
-│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐       │
-│  │   ANALYZE    │   │   OPTIMIZE   │   │   PUBLISH    │       │
-│  │              │   │              │   │              │       │
-│  │ • Upload     │──►│ • Get AI     │──►│ • Apply      │       │
-│  │ • Process    │   │   Suggestions│   │   Changes    │       │
-│  │ • Score      │   │ • Compare    │   │ • Track      │       │
-│  └──────────────┘   └──────────────┘   └──────────────┘       │
-│                                                                │
-└────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                         CLIENT LAYER                             │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  Next.js Frontend (React)                                 │  │
+│  │  - User Interface                                         │  │
+│  │  - Video Upload Component                                 │  │
+│  │  - Dashboard & Analytics                                  │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              │ HTTPS
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      CONTENT DELIVERY                            │
+│  ┌──────────────────┐         ┌──────────────────────────────┐ │
+│  │  CloudFront CDN  │────────▶│  S3 Static Hosting           │ │
+│  │  (Global Edge)   │         │  (Frontend Assets)           │ │
+│  └──────────────────┘         └──────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              │ REST API
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                       API GATEWAY LAYER                          │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  Amazon API Gateway                                       │  │
+│  │  - Request Routing                                        │  │
+│  │  - Rate Limiting                                          │  │
+│  │  - API Key Management                                     │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    AUTHENTICATION LAYER                          │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  Amazon Cognito                                           │  │
+│  │  - User Pools                                             │  │
+│  │  - JWT Token Validation                                   │  │
+│  │  - Identity Management                                    │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      APPLICATION LAYER                           │
+│  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │
+│  │   Lambda     │  │   Lambda     │  │     Lambda         │   │
+│  │   (Auth)     │  │   (Upload)   │  │   (Analysis)       │   │
+│  └──────────────┘  └──────────────┘  └────────────────────┘   │
+│  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │
+│  │   Lambda     │  │   Lambda     │  │     Lambda         │   │
+│  │ (Dashboard)  │  │ (Recommend)  │  │   (Metadata)       │   │
+│  └──────────────┘  └──────────────┘  └────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              │
+            ┌─────────────────┼─────────────────┐
+            │                 │                 │
+            ▼                 ▼                 ▼
+┌──────────────────┐  ┌──────────────┐  ┌─────────────────┐
+│   DATA LAYER     │  │ STORAGE      │  │   AI LAYER      │
+│                  │  │              │  │                 │
+│  ┌────────────┐  │  │ ┌──────────┐ │  │ ┌─────────────┐ │
+│  │  DynamoDB  │  │  │ │ S3       │ │  │ │   Amazon    │ │
+│  │            │  │  │ │ (Videos) │ │  │ │   Bedrock   │ │
+│  │ - Users    │  │  │ │          │ │  │ │             │ │
+│  │ - Videos   │  │  │ └──────────┘ │  │ │ - Analysis  │ │
+│  │ - Analysis │  │  │              │  │ │ - NLP       │ │
+│  └────────────┘  │  │              │  │ │ - Insights  │ │
+└──────────────────┘  └──────────────┘  └─────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                     MONITORING LAYER                             │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  Amazon CloudWatch                                        │  │
+│  │  - Logs Aggregation                                       │  │
+│  │  - Metrics & Alarms                                       │  │
+│  │  - Performance Monitoring                                 │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-### Core Solution Components
-1. **Secure User Authentication**: JWT-based authentication with bcrypt password hashing
-2. **Intuitive Dashboard**: Real-time analytics and content management
-3. **Video Upload System**: Drag-and-drop interface for easy uploads
-4. **AI Analysis Engine**: Deep learning models for content analysis (future)
-5. **Recommendation System**: Actionable improvement suggestions (future)
+## Component Description
 
----
+### Frontend Components
 
-## 🏛️ System Architecture Overview
+**Next.js Application**
+- Server-side rendering for optimal performance
+- React components for interactive UI
+- State management for user sessions
+- Responsive design for cross-device compatibility
 
-### High-Level Architecture
+**Key Pages**
+- Landing page with product overview
+- Authentication (login/signup)
+- Dashboard with video list and analytics
+- Upload interface with drag-and-drop
+- Analysis results with recommendations
 
-```
-                                   ┌─────────────────┐
-                                   │    CDN/Cache    │
-                                   │   (CloudFlare)  │
-                                   └────────┬────────┘
-                                            │
-                    ┌───────────────────────┴───────────────────────┐
-                    │                                               │
-           ┌────────▼────────┐                           ┌──────────▼──────────┐
-           │    Frontend     │                           │      Backend        │
-           │    (Next.js)    │◄─────── REST API ────────►│     (FastAPI)       │
-           │    Port 3000    │                           │     Port 8000       │
-           └─────────────────┘                           └──────────┬──────────┘
-                                                                    │
-                         ┌──────────────────────────────────────────┼──────────┐
-                         │                                          │          │
-                ┌────────▼────────┐                      ┌──────────▼──────┐   │
-                │   PostgreSQL    │                      │   File Storage  │   │
-                │   (Database)    │                      │   (S3/Local)    │   │
-                │   Port 5432     │                      └─────────────────┘   │
-                └─────────────────┘                                            │
-                                                                               │
-                                                               ┌───────────────▼───┐
-                                                               │   AI/ML Service   │
-                                                               │   (Future)        │
-                                                               └───────────────────┘
-```
+### Backend Components
 
-### Request Flow
+**API Gateway**
+- RESTful API endpoints
+- Request validation and transformation
+- CORS configuration
+- Throttling and rate limiting
 
-```
-User Request → Frontend → API Gateway → Backend Router → Service Layer → Database
-                                              ↓
-                                       Response ← Data Processing ← Query Result
-```
+**Lambda Functions**
 
----
+1. **Auth Service**: User registration, login, token management
+2. **Upload Service**: Pre-signed URL generation, upload validation
+3. **Analysis Service**: Video processing orchestration, AI model invocation
+4. **Recommendation Service**: Insight generation, suggestion formatting
+5. **Dashboard Service**: Data aggregation, metrics calculation
+6. **Metadata Service**: Video information management
 
-## 🧩 System Component Explanation
+### Data Layer
 
-### 1. Frontend (Next.js 14)
+**DynamoDB Tables**
 
-**Purpose**: User interface and client-side logic
+1. **Users Table**
+   - Partition Key: userId
+   - Attributes: email, profile, preferences, createdAt
 
-| Component | Responsibility |
-|-----------|----------------|
-| `/app/page.tsx` | Landing page with hero section |
-| `/app/login/page.tsx` | User authentication |
-| `/app/signup/page.tsx` | User registration |
-| `/app/dashboard/page.tsx` | Main user dashboard |
-| `/services/api.ts` | API communication layer |
+2. **Videos Table**
+   - Partition Key: videoId
+   - Sort Key: userId
+   - Attributes: title, description, s3Key, uploadDate, status
 
-**Key Features**:
-- Server-side rendering for SEO
-- App Router for optimized routing
-- CSS Modules for scoped styling
-- Responsive design for all devices
+3. **Analysis Table**
+   - Partition Key: analysisId
+   - Sort Key: videoId
+   - Attributes: insights, recommendations, score, timestamp
 
-### 2. Backend (FastAPI)
+### Storage Layer
 
-**Purpose**: Business logic and API endpoints
+**S3 Buckets**
+- **Video Storage**: Raw uploaded videos with lifecycle policies
+- **Static Assets**: Frontend build artifacts
+- **Processed Content**: Thumbnails and optimized versions
 
-| Module | Responsibility |
-|--------|----------------|
-| `main.py` | Application entry point, CORS, routes |
-| `config.py` | Environment configuration |
-| `database.py` | Database connection management |
-| `models/` | SQLAlchemy ORM models |
-| `schemas/` | Pydantic validation schemas |
-| `routes/` | API endpoint definitions |
-| `services/` | Business logic implementation |
+### AI Layer
 
-**Key Features**:
-- Automatic OpenAPI documentation
-- Async request handling
-- Dependency injection
-- JWT authentication middleware
+**Amazon Bedrock Integration**
+- Foundation model selection for content analysis
+- Prompt engineering for accurate insights
+- Response parsing and formatting
+- Cost optimization through efficient API usage
 
-### 3. Database (PostgreSQL)
+## Data Flow
 
-**Purpose**: Persistent data storage
+### Video Upload Flow
+1. User selects video in frontend
+2. Frontend requests pre-signed URL from Lambda
+3. Video uploads directly to S3
+4. S3 trigger invokes Analysis Lambda
+5. Analysis Lambda calls Bedrock for AI processing
+6. Results stored in DynamoDB
+7. User notified via dashboard update
 
-**Schema Design**:
-```sql
-Table: users
-├── id (PK, SERIAL)
-├── name (VARCHAR(100))
-├── email (VARCHAR(255), UNIQUE)
-├── password (VARCHAR(255))  -- bcrypt hashed
-├── is_active (BOOLEAN)
-├── created_at (TIMESTAMP)
-└── updated_at (TIMESTAMP)
-```
+### Analysis Flow
+1. Video metadata extracted
+2. Content sent to Bedrock for analysis
+3. AI model processes video characteristics
+4. Insights generated and structured
+5. Recommendations formulated
+6. Results cached in DynamoDB
+7. Dashboard displays findings
 
-### 4. Authentication Service
+## Scalability Strategy
 
-**Purpose**: Secure user authentication
+### Horizontal Scaling
+- Lambda auto-scales based on request volume
+- DynamoDB on-demand capacity for variable workloads
+- S3 automatically handles increased storage needs
+- CloudFront edge locations for global distribution
 
-```
-┌─────────────┐       ┌─────────────┐       ┌─────────────┐
-│   Client    │──────►│   Server    │──────►│   Database  │
-│             │       │             │       │             │
-│  Login Form │       │  Validate   │       │  User Data  │
-│             │◄──────│  Generate   │◄──────│             │
-│  JWT Token  │       │    JWT      │       │  Verify     │
-└─────────────┘       └─────────────┘       └─────────────┘
-```
+### Performance Optimization
+- CloudFront caching for static assets
+- DynamoDB DAX for read-heavy operations (future)
+- Lambda provisioned concurrency for critical functions
+- S3 Transfer Acceleration for large uploads
 
-**Security Measures**:
-- Bcrypt password hashing (cost factor: 12)
-- JWT with configurable expiration
-- CORS protection
-- SQL injection prevention via ORM
+### Cost Optimization
+- S3 Intelligent-Tiering for storage cost reduction
+- Lambda memory optimization based on profiling
+- DynamoDB capacity planning and reserved capacity
+- CloudWatch log retention policies
 
----
+## Security Considerations
 
-## 🔄 Workflow Description
+### Authentication & Authorization
+- Cognito user pools with MFA support
+- JWT token-based API authentication
+- IAM roles with least privilege principle
+- API Gateway authorizers for endpoint protection
 
-### User Registration Flow
+### Data Protection
+- Encryption at rest (S3, DynamoDB)
+- Encryption in transit (TLS/SSL)
+- Pre-signed URLs with expiration
+- Secure environment variable management
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant F as Frontend
-    participant B as Backend
-    participant D as Database
+### Network Security
+- VPC configuration for Lambda functions (if needed)
+- Security groups and NACLs
+- API Gateway resource policies
+- CloudFront signed URLs for sensitive content
 
-    U->>F: Fill signup form
-    F->>F: Validate input
-    F->>B: POST /signup
-    B->>B: Hash password
-    B->>D: Insert user
-    D-->>B: User created
-    B->>B: Generate JWT
-    B-->>F: Return token + user
-    F->>F: Store token
-    F-->>U: Redirect to dashboard
-```
+### Compliance
+- Data residency considerations
+- User data privacy (GDPR-ready architecture)
+- Audit logging via CloudWatch
+- Regular security assessments
 
-### Authentication Flow
+## Future Enhancements
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant F as Frontend
-    participant B as Backend
+### Phase 2: Advanced Features
+- **Thumbnail Optimization**: AI-generated thumbnail suggestions with A/B testing
+- **Engagement Prediction**: ML models predicting view counts and engagement rates
+- **SEO Optimization**: Automated metadata enhancement for search visibility
+- **Advanced Analytics**: Trend analysis, competitor benchmarking, performance tracking
 
-    U->>F: Enter credentials
-    F->>B: POST /login
-    B->>B: Verify password
-    B->>B: Generate JWT
-    B-->>F: Return token
-    F->>F: Store in localStorage
-    F-->>U: Redirect to dashboard
-    
-    Note over F,B: Subsequent requests
-    F->>B: Request + Bearer token
-    B->>B: Validate token
-    B-->>F: Protected data
-```
+### Phase 3: Platform Expansion
+- **Multi-Platform Support**: Integration with YouTube, TikTok, Instagram
+- **Collaboration Tools**: Team workspaces, shared projects, approval workflows
+- **Real-Time Monitoring**: Live performance tracking post-publication
+- **Custom AI Models**: Fine-tuned models based on user's content history
 
-### Dashboard Access Flow
+### Phase 4: Enterprise Features
+- **White-Label Solution**: Customizable branding for agencies
+- **API Access**: Developer API for third-party integrations
+- **Advanced Reporting**: Custom reports, scheduled exports
+- **Dedicated Support**: Priority support and SLA guarantees
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant F as Frontend
-    participant B as Backend
+## Technical Debt & Considerations
 
-    U->>F: Navigate to dashboard
-    F->>F: Check auth token
-    alt Token exists
-        F->>B: GET /dashboard + token
-        B->>B: Validate token
-        B-->>F: Dashboard data
-        F-->>U: Display dashboard
-    else No token
-        F-->>U: Redirect to login
-    end
-```
+### Known Limitations
+- MVP focuses on core functionality over edge cases
+- Limited video format support initially
+- Basic error handling and retry logic
+- Minimal caching implementation
 
----
-
-## ⚙️ Design Considerations
-
-### Security
-
-| Aspect | Implementation |
-|--------|----------------|
-| Password Storage | bcrypt with salt |
-| Authentication | JWT with HS256 algorithm |
-| Token Expiry | 30 minutes (configurable) |
-| CORS | Restricted to frontend origin |
-| Input Validation | Pydantic schemas |
-
-### Scalability
-
-| Consideration | Approach |
-|---------------|----------|
-| Horizontal Scaling | Stateless API design |
-| Database | Connection pooling (10 connections) |
-| Caching | Ready for Redis integration |
-| File Storage | S3-compatible storage ready |
-
-### Performance
-
-| Optimization | Implementation |
-|--------------|----------------|
-| API | Async endpoints |
-| Database | Indexed queries |
-| Frontend | Next.js SSR + code splitting |
-| Assets | Static file optimization |
-
-### Maintainability
-
-| Practice | Implementation |
-|----------|----------------|
-| Code Structure | Modular architecture |
-| Type Safety | TypeScript + Pydantic |
-| Documentation | Auto-generated OpenAPI |
-| Testing | Pytest + Jest ready |
-
----
-
-## 🚀 Future Enhancements
-
-### Short-term (3-6 months)
-1. **Video Upload Module**: S3 integration for video storage
-2. **Basic AI Analysis**: Integration with video analysis APIs
-3. **Email Notifications**: User engagement emails
-4. **Password Reset**: Forgot password functionality
-
-### Medium-term (6-12 months)
-1. **Advanced ML Models**: Custom trained models for content scoring
-2. **Real-time Processing**: WebSocket for live analysis updates
-3. **Collaborative Features**: Team accounts and sharing
-4. **Analytics Dashboard**: Comprehensive content performance metrics
-
-### Long-term (12+ months)
-1. **Mobile Applications**: iOS and Android apps
-2. **API Platform**: Public API for third-party developers
-3. **Enterprise Features**: SSO, audit logs, compliance
-4. **AI Content Generation**: AI-assisted content creation tools
-
----
-
-## 📊 Technical Metrics
-
-### Performance Targets
-
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| API Latency (p95) | < 200ms | Application monitoring |
-| Frontend LCP | < 2.5s | Lighthouse |
-| Database Query | < 50ms | Query analyzer |
-| Uptime | 99.9% | Health checks |
-
-### Capacity Planning
-
-| Component | Initial | Scaled |
-|-----------|---------|--------|
-| Concurrent Users | 100 | 10,000+ |
-| Requests/sec | 50 | 5,000+ |
-| Storage | 50 GB | 10+ TB |
-| Database Connections | 20 | 200+ |
-
----
-
-## ✅ Conclusion
-
-UPLIFTLY represents a modern, scalable solution for content creators seeking to leverage AI for content optimization. The MVP delivers:
-
-1. **Secure Authentication**: Industry-standard JWT + bcrypt implementation
-2. **Clean Architecture**: Separation of concerns with modular design
-3. **Premium UI/UX**: Modern, responsive interface with smooth animations
-4. **Docker-Ready**: One-command deployment with Docker Compose
-5. **Extensible Design**: Ready for future AI/ML integration
-
-The platform is built with growth in mind, using technologies that scale from hackathon prototype to production system.
-
----
-
-*Document Version: 1.0.0 | Last Updated: February 2026*
+### Future Improvements
+- Implement comprehensive testing suite
+- Add monitoring dashboards and alerting
+- Optimize Lambda cold start times
+- Implement circuit breakers for external services
+- Add request queuing for high-volume scenarios
