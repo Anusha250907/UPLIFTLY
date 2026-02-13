@@ -209,7 +209,7 @@ This project was developed for AI FOR BHARAT with the goal of empowering content
 
 **Team Members**: [CONTENT CATLAYST/SOUMY SAWANT,VISHESH GUPTA, ANUSHA BHALLA AND YASH KOTHARI]
 
-**Submission Date**: [15/02/2026]
+**Submission Date**: [14/02/2026]
 
 
 ## 🤝 Contributing
