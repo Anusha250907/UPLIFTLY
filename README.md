@@ -218,7 +218,7 @@ This is a hackathon project, but contributions are welcome! Please feel free to 
 
 ## 📧 Contact
 
-For questions or feedback, please reach out to soumy0802@gmail.com
+For questions or feedback, please reach out to  [soumy0802@gmail.com]
 ---
 
 Built with ❤️ using AWS and AI
