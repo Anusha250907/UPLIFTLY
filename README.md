@@ -207,7 +207,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 This project was developed for AI FOR BHARAT with the goal of empowering content creators through AI-driven insights. The MVP demonstrates core functionality including authentication, video upload, AI analysis, and recommendation generation using AWS serverless technologies.
 
-**Team Members**: [CONTENT CATLAYST/SOUMY SAWANT,VISHESH GUPTA, ANUSHA BHALLA AND YASH KOTHARI]
+**Team Members**: CONTENT CATLAYST/SOUMY SAWANT,VISHESH GUPTA, ANUSHA BHALLA AND YASH KOTHARI.
 
 **Submission Date**: [14/02/2026]
 
