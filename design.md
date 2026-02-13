@@ -42,7 +42,7 @@ UPLIFTLY addresses these challenges by providing:
 ┌────────────────────────────────────────────────────────────────┐
 │                      CONTENT DELIVERY                          │
 │  ┌──────────────────┐         ┌──────────────────────────────┐ │
-│  │  CloudFront CDN  │────────▶│  S3 Static Hosting          | |
+│  │  CloudFront CDN  │────────▶│  S3 Static Hosting           | |
 │  │  (Global Edge)   │         │  (Frontend Assets)           │ │
 │  └──────────────────┘         └──────────────────────────────┘ │
 └────────────────────────────────────────────────────────────────┘
@@ -280,4 +280,5 @@ UPLIFTLY addresses these challenges by providing:
 - Optimize Lambda cold start times
 - Implement circuit breakers for external services
 - Add request queuing for high-volume scenarios
+
 
