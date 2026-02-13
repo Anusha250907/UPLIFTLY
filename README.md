@@ -205,7 +205,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🏆 Hackathon Submission
 
-This project was developed for [AI FOR BHARAT] with the goal of empowering content creators through AI-driven insights. The MVP demonstrates core functionality including authentication, video upload, AI analysis, and recommendation generation using AWS serverless technologies.
+This project was developed for AI FOR BHARAT with the goal of empowering content creators through AI-driven insights. The MVP demonstrates core functionality including authentication, video upload, AI analysis, and recommendation generation using AWS serverless technologies.
 
 **Team Members**: [CONTENT CATLAYST/SOUMY SAWANT,VISHESH GUPTA, ANUSHA BHALLA AND YASH KOTHARI]
 
@@ -218,8 +218,7 @@ This is a hackathon project, but contributions are welcome! Please feel free to 
 
 ## 📧 Contact
 
-For questions or feedback, please reach out to [your-soumy0802@gmail.com]
-
+For questions or feedback, please reach out to soumy0802@gmail.com
 ---
 
 Built with ❤️ using AWS and AI
