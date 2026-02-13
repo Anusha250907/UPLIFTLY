@@ -48,15 +48,15 @@ Content creators often publish videos without understanding their potential perf
 
 ```
 upliftly/
-├── frontend/                 # Next.js frontend application
-│   ├── components/          # React components
+├── frontend/               # Next.js frontend application
+│   ├── components/         # React components
 │   ├── pages/              # Next.js pages
 │   ├── public/             # Static assets
 │   ├── styles/             # CSS/styling files
 │   └── utils/              # Utility functions
 │
-├── backend/                 # Node.js backend services
-│   ├── functions/          # Lambda function handlers
+├── backend/               # Node.js backend services
+│   ├── functions/         # Lambda function handlers
 │   │   ├── auth/          # Authentication logic
 │   │   ├── upload/        # Video upload handling
 │   │   ├── analysis/      # AI analysis orchestration
@@ -64,11 +64,11 @@ upliftly/
 │   ├── services/          # Business logic services
 │   └── utils/             # Helper functions
 │
-├── infrastructure/          # Infrastructure as Code
+├── infrastructure/        # Infrastructure as Code
 │   ├── cloudformation/    # AWS CloudFormation templates
 │   └── scripts/           # Deployment scripts
 │
-├── docs/                   # Documentation
+├── docs/                  # Documentation
 │   ├── design.md          # System design document
 │   └── requirements.md    # Requirements specification
 │
